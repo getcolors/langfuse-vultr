@@ -20,14 +20,14 @@
 
 ;; Managed by `bb pin` — do not edit by hand. An initial nil is intentional:
 ;; the repository must be committed and pushed before a real SHA can be stamped.
-(def ^:private langfuse-sha "e7a18678d3b7a5be23cd6f701927794514e7efe6")
+(def ^:private langfuse-sha "c18f2540b609672159aa7e31ca3ab89a132a48a4")
 
 (def ^:private langfuse-git-url "https://github.com/getcolors/langfuse.git")
 (def ^:private green-git-url "https://github.com/getcolors/green.git")
 
 (defn- lib-coord [env-var url sha deps-root]
   (if-let [root (System/getenv env-var)]
-    {:local/root root}
+    {:local/root (if deps-root (str (io/file root deps-root)) root)}
     (when sha
       (cond-> {:git/url url :git/sha sha}
         deps-root (assoc :deps/root deps-root)))))
@@ -37,13 +37,13 @@
 
 (def ^:private bootstrap-error
   (when (and (System/getProperty "babashka.version") (not resolved?))
-    (let [langfuse (lib-coord "LANGFUSE_LIB_ROOT" langfuse-git-url langfuse-sha nil)
+    (let [langfuse (lib-coord "LANGFUSE_LIB_ROOT" langfuse-git-url langfuse-sha "green")
           green (lib-coord "GREEN_LIB_ROOT" green-git-url nil nil)]
       (if-not langfuse
         (str "this launcher carries no langfuse pin.\n"
              "It has not been stamped by `bb pin`, which cannot run until the "
              "langfuse repository has been pushed.\n"
-             "Point it at a checkout meanwhile: LANGFUSE_LIB_ROOT=/path/to/langfuse")
+             "Point it at a checkout meanwhile: LANGFUSE_LIB_ROOT=/path/to/langfuse (the repository root)")
         (do ((requiring-resolve 'babashka.deps/add-deps)
              {:deps (cond-> {'io.github.getcolors/langfuse langfuse}
                       green (assoc 'io.github.getcolors/green green))})
