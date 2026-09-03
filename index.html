@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="The langfuse-vultr deployment: desired state for self-hosted Langfuse v4 on six Vultr machines — Neon, Redis, three ClickHouse replicas, and the app host behind Cloudflare.">
+  <title>langfuse-vultr — getcolors deployment</title>
+  <style>
+    :root{color-scheme:light;--ink:#1f2328;--muted:#59636e;--line:#d0d7de;--soft:#f6f8fa;--blue:#0969da;--green:#1a7f37}*{box-sizing:border-box}body{margin:0;color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:920px;margin:auto;padding:64px 28px 100px}h1{font-size:48px;line-height:1.05;margin:0}h2{margin-top:54px;padding-bottom:8px;border-bottom:1px solid var(--line)}.lead{font-size:20px;color:var(--muted);max-width:790px}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}pre{padding:18px;overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--soft)}:not(pre)>code{padding:.12em .35em;border-radius:5px;background:var(--soft)}a{color:var(--blue)}.eyebrow{color:var(--green);font-weight:700;letter-spacing:.08em}.callout{padding:16px 18px;border-left:4px solid var(--green);background:#dafbe1}.warn{padding:16px 18px;border-left:4px solid #bf8700;background:#fff8c5}@media(max-width:650px){main{padding-top:38px}h1{font-size:36px}}
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4VKP1WY4QJ"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-4VKP1WY4QJ',{page_title:'langfuse-vultr — getcolors deployment'});</script>
+<script src="https://rybbit.getcolors.ai/api/script.js" data-site-id="9fb9c41a6d49" defer></script>
+</head>
+<body><main>
+  <p class="eyebrow">DEPLOYMENT · VULTR · LLM OBSERVABILITY</p>
+  <h1>langfuse-vultr</h1>
+  <p class="lead">Desired state for self-hosted Langfuse v4 on six Vultr machines in one VPC, converged by the <a href="https://github.com/getcolors/langfuse">langfuse</a> Package Skill: a Neon storage tier, Redis, three ClickHouse replicas with Keeper, and the application host behind Cloudflare.</p>
+  <div class="callout"><strong>Desired state only.</strong> This repository is a <code>colors.yml</code>, an installed launcher, an <code>.envrc</code> and a <code>devenv.nix</code>. Everything else is generated under <code>.colors/</code> or secret in <code>.envrc.private</code>.</div>
+  <h2>Use</h2>
+  <pre><code>./green build
+./green create --dry-run
+./green create
+./green describe
+./green rehearse</code></pre>
+  <h2>Recovery</h2>
+  <p>Postgres dumps every six hours, ClickHouse backups nightly, media archived additively — all with completion markers in the backup bucket. <code>./green rehearse</code> restores both stores, boots the pinned image against them, reads through the API, drills a replica loss and a Redis restart, and writes <code>.colors-recovery-verified</code>.</p>
+  <div class="warn"><strong>Three secrets are operator-held.</strong> <code>ENCRYPTION_KEY</code>, <code>SALT</code> and the initial user's password live in <code>.envrc.private</code> and must also live somewhere that is not one of these machines: a Postgres backup is readable only with the first two.</div>
+  <p><a href="https://github.com/getcolors/langfuse-vultr">Source on GitHub</a> · <a href="https://github.com/getcolors/langfuse">The langfuse Package Skill</a></p>
+</main></body>
+</html>
