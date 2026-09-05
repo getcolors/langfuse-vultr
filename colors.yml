@@ -40,7 +40,7 @@
 # project API keys. Retrieve the project keys over SSH with
 # `sudo langfuse-credential` on the app host; see README.
 
-profile: langfuse-vultr
+profile: langfuse-vultr-2
 workdir: .colors
 
 provider-compute: vultr
@@ -88,7 +88,7 @@ langfuse-host: langfuse.bigconfig.online
 # success, and none of these values can be changed by re-converging.
 langfuse-init-org-id: getcolors
 langfuse-init-org-name: getcolors
-langfuse-init-project-id: langfuse-vultr
+langfuse-init-project-id: langfuse-vultr-2
 langfuse-init-project-name: langfuse-vultr
 langfuse-init-user-email: claude@ululi.it
 langfuse-init-user-name: Claude
@@ -98,7 +98,7 @@ langfuse-init-user-name: Claude
 # Prefixes are profile-scoped so one bucket can carry several deployments:
 # <prefix>events/, <prefix>media/, <prefix>exports/.
 langfuse-s3-bucket: langfuse-storage
-langfuse-s3-prefix: langfuse-vultr/
+langfuse-s3-prefix: langfuse-vultr-2/
 
 # The ingestion gate that runs on every converge: this many traces through
 # the public path, all of them queryable within the timeout. Small enough to
@@ -156,8 +156,8 @@ neon-pg-version: 17
 # The R2 prefix plus these ids ARE the database: fixing them here is what
 # makes convergence reconcilable and recovery describable. Non-secret 32-hex
 # identifiers, minted for this deployment.
-neon-tenant-id: 7b3129f7642dfab34fce2a01cb876f6a
-neon-timeline-id: 8072f0b03ca4dae540dd380e8ffbc986
+neon-tenant-id: 9a982a9413b6ad911772859c518e3019
+neon-timeline-id: d4e4166b7b3b34ec0957495b53c7fb98
 
 # The database and role convergence creates on the compute node for Langfuse.
 # The role password is generated on the Neon host; cloud_admin keeps its own.
@@ -171,7 +171,7 @@ neon-role: langfuse
 neon-r2-bucket: langfuse-storage
 neon-r2-endpoint: https://319271fed8bc6d2d9059362be1165f37.eu.r2.cloudflarestorage.com
 neon-r2-region: auto
-neon-r2-prefix: langfuse-vultr/neon
+neon-r2-prefix: langfuse-vultr-2/neon
 
 # --- Backups in R2 ------------------------------------------------------------
 
